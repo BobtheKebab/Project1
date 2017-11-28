@@ -5,8 +5,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-char ** parse_args( char * line, char * mode);
-int count_args(char * line, char * mode);
+char ** parse_args( char * line);
+int count_args(char * line);
 int run( char * line );
 
 
@@ -14,9 +14,9 @@ int main() {
   char line[256];
   printf("\nWelcome to our shell.\nType commands. Press Ctrl+C to quit.\n");
   printf("=============================================================\n");
+  int EXIT = 1;
 
-  //continous running
-  while (1) {
+  while (EXIT) {
     printf("$ ");
 
     //get user input
@@ -25,19 +25,18 @@ int main() {
     //remove new line from stdin
     char * cleaned = line;
     cleaned = strsep(&cleaned, "\n");
-    if (!run(cleaned)) {
-      return 0;
-    }
+    EXIT = run(cleaned);
 
   }
-  
+    return EXIT;  
+}
+
   /*
   char * a = "ls -l";
   char * b = "echo hello";
   char ** args = {a, b};
   run(args[0]);
   */
-}
 
 
 int run( char * line ) {
@@ -55,11 +54,29 @@ int run( char * line ) {
     chdir(seg);
   }
   else if (!strcmp(args[0], "exit")) {
+    free(args);
     return 0;
   }
   else {
     f = fork();
-    //create child to run process
+    //child
+    if (!f) {
+      //      printf("%d\n", args[2]);
+      //      printf("%s\n", args[2]);
+      execvp(args[0], args);
+      return 0;
+    }
+    //parent waits
+    else {
+      int status;
+      wait(&status);
+      free(args);
+      return 1;
+    }
+  }
+}
+
+  //create child to run process
     /*
   char** args;
   if (strstr(line, ";")) {
@@ -77,30 +94,22 @@ int run( char * line ) {
     //create child to run process
     f = fork();
     */
-    if (!f) {
-      execvp(args[0], args);
-      return 0;
-    }
-    //parent waits
-    else {
-      int status;
-      wait(&status);
-    }
-  }
-}
 
 
-char ** parse_args( char * line, char * mode ) {
+char ** parse_args( char * line ) {
   
   //allocate an array with count_args slots to store char pointers in
-  char** parsed = (char **) calloc(count_args(line, mode), sizeof(char *));
+  int num =  count_args(line);
+  printf("%d\n", num);
+  char** parsed = (char **) calloc(count_args(line), sizeof(char *));
   int index = 0;
 
   //hold the remaining line to parse; while there is more...
   char * seg = line; 
   while (seg) {
     //set the slot in parsed as the returned string segment by strsep
-    parsed[index] = strsep(&seg, mode);
+    parsed[index] = strsep(&seg, " ");
+    printf("%s\n", parsed[index]);
     index++;
   }
 
@@ -109,10 +118,10 @@ char ** parse_args( char * line, char * mode ) {
 }
 
 
-int count_args(char * line, char * mode) {
+int count_args(char * line) {
   int count = 1;
   while (*line) {
-    if (line == mode) {
+    if (*line == ' ') {
       count++;
     }
     line++;
