@@ -40,7 +40,7 @@ int main() {
 
 
 int run( char * line ) {
-  char copied_line[sizeof(line)];
+  char copied_line[256];
   strcpy(copied_line, line);
   
   //put line in correct format
@@ -61,8 +61,11 @@ int run( char * line ) {
     f = fork();
     //child
     if (!f) {
-      //      printf("%d\n", args[2]);
-      //      printf("%s\n", args[2]);
+      /* char * apple[4]; */
+      /* apple[0] = "ls"; */
+      /* apple[1] = "-a"; */
+      /* apple[2] = "-l"; */
+      /* apple[3] = 0; */
       execvp(args[0], args);
       return 0;
     }
