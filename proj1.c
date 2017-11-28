@@ -103,7 +103,6 @@ char ** parse_args( char * line ) {
   
   //allocate an array with count_args slots to store char pointers in
   int num =  count_args(line);
-  printf("%d\n", num);
   char** parsed = (char **) calloc(count_args(line), sizeof(char *));
   int index = 0;
 
@@ -112,7 +111,6 @@ char ** parse_args( char * line ) {
   while (seg) {
     //set the slot in parsed as the returned string segment by strsep
     parsed[index] = strsep(&seg, " ");
-    printf("%s\n", parsed[index]);
     index++;
   }
 
