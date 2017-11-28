@@ -25,27 +25,44 @@ int main() {
     //remove new line from stdin
     char * cleaned = line;
     cleaned = strsep(&cleaned, "\n");
-    run(cleaned);
+    if (!run(cleaned)) {
+      return 0;
+    }
+
   }
 }
 
 
 int run( char * line ) {
 
+  char copied_line[sizeof(line)];
+  strcpy(copied_line, line);
+  
   //put line in correct format
-  char ** args = parse_args(line);
+  char ** args = parse_args(copied_line);
   int f;
 
-  //create child to run process
-  f = fork();
-  if (!f) {
-    execvp(args[0], args);
+  if (!strcmp(args[0], "cd")) {
+    free(args);
+    char * seg = line;
+    strsep(&seg, " ");
+    chdir(seg);
+  }
+  else if (!strcmp(args[0], "exit")) {
     return 0;
   }
-  //parent waits
   else {
-    int status;
-    wait(&status);
+    f = fork();
+    //create child to run process
+    if (!f) {
+      execvp(args[0], args);
+      return 0;
+    }
+    //parent waits
+    else {
+      int status;
+      wait(&status);
+    }
   }
 }
 
