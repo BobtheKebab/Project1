@@ -12,7 +12,7 @@ int count_args( char * line, char target );
 char ** parse_args( char * line, char target ) {
   
   //allocate an array with count_args slots to store char pointers in
-  int num =  count_args(line, target);
+  int num =  count_args(line, target); 
   char** parsed = (char **) calloc(num, sizeof(char *));
   int index = 0;
 
