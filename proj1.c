@@ -5,6 +5,7 @@
 
 int run( char * line );
 int command_cd(char * path);
+int prepare(char * line);
 
 
 //===============================================
@@ -19,18 +20,41 @@ int main() {
     //get user input
     fgets(line, 256, stdin);
     //remove new line from stdin
-    char * cleaned = line;
-    cleaned = strsep(&cleaned, "\n");
-    EXIT = run(cleaned);
+    /* char * cleaned = line; */
+    /* cleaned = strsep(&cleaned, "\n"); */
+    /* EXIT = run(cleaned); */
+    EXIT = prepare(line);
   }
     return EXIT;  
+}
+
+//===============================================
+//looks for symbols like ; or > or < and |
+int prepare(char * line) {
+  char ** commands;
+  char * cleaned = line;
+  cleaned = strsep(&cleaned, "\n");
+
+  if (strchr(cleaned, ';')) {
+    int target = count_args(cleaned, ';');
+    commands = parse_args(cleaned, ';');
+    int count = 0;
+    while (count < target) {
+      run(commands[count]);
+      count++;
+    }
+    free(commands);
+  } else {
+    return run(cleaned);
+  }
+  return 1;
 }
 
 int run( char * line ) {
   char copied_line[256];
   strcpy(copied_line, line);
   //put line in correct format
-  char ** args = parse_args(copied_line);
+  char ** args = parse_args( copied_line, ' ' );
   int f;
 
   if (!strcmp(args[0], "cd")) {
@@ -60,7 +84,7 @@ int run( char * line ) {
 
 //==============================================
 int command_cd(char * path) {
-  char * seg = line;
+  char * seg = path;
   strsep(&seg, " ");
   chdir(seg);
   return 1;
@@ -70,23 +94,6 @@ int command_cd(char * path) {
 
 
 
-  //create child to run process
-    /*
-  char** args;
-  if (strstr(line, ";")) {
-    args = parse_args(line, ";");
-    int count = 0, target = count_args(line, ";");
-    while (count < target) {
-      run(args[count]);
-      count++;
-    }
-  } else {
-    //put line in correct format
-    args = parse_args(line, " ");
-    int f;
 
-    //create child to run process
-    f = fork();
-    */
 
 
