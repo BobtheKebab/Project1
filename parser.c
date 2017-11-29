@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <fcntl.h>
 
 char ** parse_args( char * line, char target);
 int count_args( char * line, char target );
