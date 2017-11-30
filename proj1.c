@@ -34,26 +34,23 @@ char * cleanser( char * line ) {
   char * cleaned = line;
   strsep(&cleaned, "\n");
 
-  //delete whitespace and spaces after ;
+  //delete whitespace and spaces after ; >/< and |
   char * start = line;
   int DELETE = 0; //marker that this should now be a valid char
-  while (*(line+1)) {
-    //there was a ; or a ' '; delete all spaces after until char is valid or 0
+  while (*line) {
+    //delete spaces if they occurred in front of symbols or after ' ' & symbols
     while(DELETE) {
-      if (*line == ' ') {
-	strcpy (line, line+1);
+      if (*line == ';' | *line == '>') {
+	strcpy( line-1, line );
+      }
+      else if (*line == ' ') {
+	strcpy( line, line+1 );
       } else {
 	DELETE = 0;
       }
     }
-    //it's a ; with a space after; delete and turn on the delete flag
-    if (*line == ';' && *(line+1) == ' ') {
-      strcpy (line+1, line+2);
-      DELETE = 1;
-    }
-    //there's two spaces in a row; dete and turn on the delete flag
-    else if (*line == ' ' && *(line+1) == ' ') {
-      strcpy (line, line+1);
+    //; ' ' and > shouldn't have spaces after them or before
+    if (*line == ' ' | *line == ';' | *line == '>') {
       DELETE = 1;
     }
     line++;
@@ -67,15 +64,13 @@ int direct(char * line) {
 
   //first, get rid of the newline symbol
   char ** commands;
-  char * cleaned = line;
-  cleaned = strsep(&cleaned, "\n");
-
+  
   //if there's multiple commands:
-  if (strchr(cleaned, ';')) {
+  if (strchr(line, ';')) {
     //count how many internal commands
-    int target = count_args(cleaned, ';');
+    int target = count_args(line, ';');
     //create an array of strings with each index carrying a command
-    commands = parse_args(cleaned, ';');
+    commands = parse_args(line, ';');
     int count = 0;
     //run them all
     while (count < target) {
@@ -83,8 +78,8 @@ int direct(char * line) {
       count++;
     }
     free(commands);
-  } else if (strchr(cleaned, '>')) {
-    commands = parse_args(cleaned, '>');
+  } else if (strchr(line, '>')) {
+    commands = parse_args(line, '>');
     int fd = open("hello", O_CREAT | O_WRONLY, 0644);
     int fdOut = dup(STDOUT_FILENO);
     dup2(fd, STDOUT_FILENO);
@@ -93,7 +88,7 @@ int direct(char * line) {
   }
   //regular command
   else {
-    return run(cleaned);
+    return run(line);
   }
   return 1;
 }
