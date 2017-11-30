@@ -85,11 +85,11 @@ int direct(char * line) {
     free(commands);
   } else if (strchr(cleaned, '>')) {
     commands = parse_args(cleaned, '>');
-    int fd = open(commands[1], O_CREAT | O_WRONLY, 0644);
+    int fd = open("hello", O_CREAT | O_WRONLY, 0644);
     int fdOut = dup(STDOUT_FILENO);
     dup2(fd, STDOUT_FILENO);
     run(commands[0]);
-    dup2(fdOut, fd);
+    dup2(fdOut, STDOUT_FILENO);
   }
   //regular command
   else {
