@@ -45,13 +45,20 @@ char * cleanser( char * line ) {
       }
       else if (*line == ' ') {
 	strcpy( line, line+1 );
-      } else {
+      }
+      else if (!*line) {
+	strcpy( line-1, line );
+	return start;
+      }else {
 	DELETE = 0;
       }
     }
     //; ' ' and > shouldn't have spaces after them or before
     if (*line == ' ' | *line == ';' | *line == '>') {
       DELETE = 1;
+    }
+    if (*line == ' ' && !*(line+1)) {
+      strcpy( line, line+1 );
     }
     line++;
   }
@@ -80,7 +87,7 @@ int direct(char * line) {
     free(commands);
   } else if (strchr(line, '>')) {
     commands = parse_args(line, '>');
-    int fd = open("hello", O_CREAT | O_WRONLY, 0644);
+    int fd = open(commands[1], O_CREAT | O_WRONLY, 0644);
     int fdOut = dup(STDOUT_FILENO);
     dup2(fd, STDOUT_FILENO);
     run(commands[0]);
