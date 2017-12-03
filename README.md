@@ -3,22 +3,22 @@ Systems Project 01
 by Ahbab Ashraf and Kristin Lin
 
 #### Features: ####
-	Forks and executes commands--including cd and exit!
-	Parses multiple commands on one line!
-	Redirects using >, <!
-	Simple pipes | !
+- Forks and executes commands--including cd and exit!
+- Parses multiple commands on one line!
+- Redirects using >, <!
+- Simple pipes | !
 
 #### Attempted: ####
-	Multiple redirections/pipes on one line
+- Multiple redirections/pipes on one line
 
 #### Bugs: ####
-	1. When executing ./a.out with other file as input, please
-	   exit and a newline, or else program will be caught in loop
-	2. UNPREDICTABLE during redirection when test calls are from file
-	   rather than STDIN
-	3. If test call resulted in error, exit might have to be called
-	   several times before functioning.
-	4. `rm -rf` and `ls -l -a` do not work (although `ls -la` does)
+1. When executing ./a.out with other file as input, please
+   exit and a newline, or else program will be caught in loop
+2. UNPREDICTABLE during redirection when test calls are from file
+   rather than STDIN
+3. If test call resulted in error, exit might have to be called
+   several times before functioning.
+4. `rm -rf` and `ls -l -a` do not work (although `ls -la` does)
 
 #### Files & Function Headers: ####
                   
