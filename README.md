@@ -22,7 +22,7 @@ by Ahbab Ashraf and Kristin Lin
                   
 ###### parser.c ######
 - - - -
-
+```
 /*===============================================                  
   _char ** parse_args()_
 
@@ -44,7 +44,8 @@ by Ahbab Ashraf and Kristin Lin
   A counter variable keeps track of the times target is found as function
   traverses through line, array of chars.                    
   ===============================================*/
-
+```
+  
 ###### proj1.c ######
 - - - -
 
