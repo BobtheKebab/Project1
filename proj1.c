@@ -40,7 +40,7 @@ char * cleanser( char * line ) {
   while (*line) {
     //delete spaces if they occurred in front of symbols or after ' ' & symbols
     while(DELETE) {
-      if (*line == ';' | *line == '>') {
+      if (*line == ';' | *line == '>' | *line == '<') {
 	strcpy( line-1, line );
       }
       else if (*line == ' ') {
@@ -54,7 +54,7 @@ char * cleanser( char * line ) {
       }
     }
     //; ' ' and > shouldn't have spaces after them or before
-    if (*line == ' ' | *line == ';' | *line == '>') {
+    if (*line == ' ' | *line == ';' | *line == '>' | *line == '<') {
       DELETE = 1;
     }
     if (*line == ' ' && !*(line+1)) {
@@ -92,6 +92,15 @@ int direct(char * line) {
     dup2(fd, STDOUT_FILENO);
     run(commands[0]);
     dup2(fdOut, STDOUT_FILENO);
+    free(commands);
+  } else if (strchr(line, '<')) {
+    commands = parse_args(line, '<');
+    int fd = open(commands[1], O_RDONLY);
+    int fdOut = dup(STDIN_FILENO);
+    dup2(fd, STDIN_FILENO);
+    run(commands[0]);
+    dup2(fdOut, STDIN_FILENO);
+    free(commands);
   }
   //regular command
   else {
@@ -109,6 +118,10 @@ int run( char * line ) {
   char ** args = parse_args( copied_line, ' ' );
   int f;
 
+  if (!strcmp(args[0], "echo")) {
+    args[1] = line+5;
+    args[2] = 0;
+  }
   if (!strcmp(args[0], "cd")) {
     free(args);
     return command_cd(line);
@@ -122,6 +135,7 @@ int run( char * line ) {
     //child
     if (!f) {
       execvp(args[0], args);
+      free(args);
       return 0;
     }
     //parent waits

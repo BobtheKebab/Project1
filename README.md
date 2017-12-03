@@ -1,7 +1,7 @@
 # Project1
 
 AKSH
-by JonAlf Dyrland-Weaver and Neeraj Bhatia
+by Ahbab Ashraf and Kristin Lin
 
 Features:
 	Forks and executes commands!
@@ -11,6 +11,8 @@ Features:
 Attempted:
 
 Bugs:
+	1. When executing ./a.out with other file as input, please
+	   exit and a newline, or else program will be caught in loop
 
 Files & Function Headers:
 parse.c
