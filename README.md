@@ -48,6 +48,50 @@ by Ahbab Ashraf and Kristin Lin
   
 ###### proj1.c ######
 - - - -
+```
+/*===============================================                     
+  _char * cleanser()_
 
-	Handles the forking an executing of commands...
+  INPUTS: char * line
+  RETURNS: Same tring with extra whitespace removed
 
+  Uses strsep to remove extra newline char, then traverses through line
+  and removes all insignicant whitespaces after a space, semicolon,
+  redirect and pipe symbols, as well as before the null terminator.
+  ===============================================*/
+
+/*===============================================                     
+  _int direct()_
+
+  INPUTS: char * line
+  RETURNS: Integer 0 (exit) or 1 (continue, successful).
+
+  Categorizes lines into different commands: multiple commands, redirect
+  commands, piping commands, or regular commands using IF ELSE statements.
+  Takes appropriate actions for those categories, and calls run.
+  ===============================================*/
+
+/*===============================================                     
+  _int run()_
+
+  INPUTS: char * line
+  RETURNS: Integer 0 (exit) or 1 (continue, successful).
+
+  Line must be a single, plain command that may be eventually fed to execvp.
+  Echo is given to execvp as a two string array: "echo", <string>. Cd is not
+  given to execvp, it calls function command_cd. Exit does not call execvp,
+  it returns 0 for exit. Otherwise, it's a plain command that is broken
+  down by spaces using parse_args and a child process feeds it to execvp.
+  ===============================================*/
+
+/*===============================================                     
+  _int command_cd()_
+
+  INPUTS: char * line
+  RETURNS: 1, successful
+
+  Calls chdir with the path, the second part of the line after the first
+  space, before returning 0.
+  ===============================================*/
+
+```
