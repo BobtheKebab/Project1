@@ -40,7 +40,7 @@ char * cleanser( char * line ) {
   while (*line) {
     //delete spaces if they occurred in front of symbols or after ' ' & symbols
     while(DELETE) {
-      if (*line == ';' | *line == '>' | *line == '<') {
+      if (*line == ';' | *line == '>' | *line == '<' | *line == '|') {
 	strcpy( line-1, line );
       }
       else if (*line == ' ') {
