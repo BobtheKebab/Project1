@@ -1,51 +1,53 @@
-# Project1
+# Project1 # 
 
-AKSH
+##AKSH##
 by Ahbab Ashraf and Kristin Lin
 
-Features:
+####Features:####
 	Forks and executes commands!
 	Parses multiple commands on one line!
 	Redirects using >, <!
 
-Attempted:
+####Attempted:####
+	Multiple redirections on one line
 
-Bugs:
+####Bugs:####
 	1. When executing ./a.out with other file as input, please
 	   exit and a newline, or else program will be caught in loop
+	2. UNPREDICTABLE during redirection when test calls are from file
+	   rather than STDIN
+	3. If test call resulted in error, exit might have to be called
+	   several times before functioning.
 
-Files & Function Headers:
-parse.c
-	Handles all line parsing fucntions
-	/*======== int count_tokens() ==========
-	Inputs:  char *line
-        	  char delim 
-	Returns: Number of tokens in line separated by delim
+####Files & Function Headers:####
+                  
+parser.c
+- - - -
 
-	Counts the number of times the character delim appears in the
-	 string line
-	The number of tokens is 1 more than the number of appearences 
-	of delim
-	If delim does not appear, 1 is returned
-	====================*/
+/*===============================================
+char ** parse_args()
 
-	/*======== char ** parse_line() ==========
-	Inputs:  char *line 
-	Returns: Array of strings where each entry is a token 
-	separated by delim
+INPUTS: char * line
+char target
+Returns: Array of strings, line cut into segments depending on target
 
-	If line contains multiple tokens separated by delim, this 
-	function will put each token into an array of strings
-	====================*/
+Line is broken up into smaller string segments where target appears. 
+Each segment is placed in an index of the returned array
+===============================================*/
 
-	/*======== char * trim() ==========
-	Inputs:  char *line 
-	Returns: Pointer to the beginning of line
+/*===============================================
+  int count_args()
 
-	Removes leading and trailing whitespace on the string line.
-	Terminating '\0' is placed at a new location if necessary.
-	====================*/
+  INPUTS: char * line
+          char target
+  Returns: Integer of times target is found in line
 
-dwsh.c
+  A counter variable keeps track of the times target is found as function
+  traverses through line, array of chars.
+  ===============================================*/
+
+proj1.c
+- - - -
+
 	Handles the forking an executing of commands...
 
