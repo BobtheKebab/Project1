@@ -52,10 +52,10 @@ by Ahbab Ashraf and Kristin Lin
 - - - -
 ```
 /*===============================================                     
-  _char * cleanser()_
+  char * cleanser()
 
   INPUTS: char * line
-  RETURNS: Same tring with extra whitespace removed
+  RETURNS: Same string with extra whitespace removed
 
   Uses strsep to remove extra newline char, then traverses through line
   and removes all insignicant whitespaces after a space, semicolon,
@@ -63,7 +63,7 @@ by Ahbab Ashraf and Kristin Lin
   ===============================================*/
 
 /*===============================================                     
-  _int direct()_
+  int direct()
 
   INPUTS: char * line
   RETURNS: Integer 0 (exit) or 1 (continue, successful).
@@ -74,7 +74,7 @@ by Ahbab Ashraf and Kristin Lin
   ===============================================*/
 
 /*===============================================                     
-  _int run()_
+  int run()
 
   INPUTS: char * line
   RETURNS: Integer 0 (exit) or 1 (continue, successful).
@@ -87,7 +87,7 @@ by Ahbab Ashraf and Kristin Lin
   ===============================================*/
 
 /*===============================================                     
-  _int command_cd()_
+  int command_cd()
 
   INPUTS: char * line
   RETURNS: 1, successful
