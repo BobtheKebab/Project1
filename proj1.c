@@ -101,6 +101,32 @@ int direct(char * line) {
     run(commands[0]);
     dup2(fdOut, STDIN_FILENO);
     free(commands);
+  } else if (strchr(line, '|')) {
+    commands = parse_args(line, '|');
+    char buf[100];
+    buf[0] = '\0';
+    char* temp;
+    FILE* fp = popen(commands[0], "r");
+
+    while (fgets(temp, sizeof(temp), fp)) {
+      //printf("%s", temp);
+      strcat(buf, temp);
+    }
+    fclose(fp);
+
+    temp = commands[1];
+    //printf("%s", temp);
+    strcat(temp, " ");
+    //printf("%s", temp);
+    char* token = strtok(buf, "\n");
+    while (token) {
+      strcat(temp, token);
+      strcat(temp, " ");
+      token = strtok(NULL, "\n");
+    }
+
+    printf("%s", temp);
+    run(temp);
   }
   //regular command
   else {
