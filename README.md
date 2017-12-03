@@ -26,10 +26,10 @@ by Ahbab Ashraf and Kristin Lin
 - - - -
 ```
 /*===============================================                  
-  _char ** parse_args()_
+  char ** parse_args()
 
   INPUTS: char * line
-  char target
+  	  char target
   RETURNS: Array of strings, line cut into segments depending on target
 
   Line is broken up into smaller string segments where target appears. 
@@ -37,7 +37,7 @@ by Ahbab Ashraf and Kristin Lin
 ===============================================*/
 
 /*===============================================                     
-  _int count_args()_
+  int count_args()
 
   INPUTS: char * line
           char target
