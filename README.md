@@ -8,20 +8,24 @@ by Ahbab Ashraf and Kristin Lin
 - Redirects using >, <!
 - Simple pipes | !
 
+#### Notes: ####
+- When executing ./a.out with other file as input, please
+  exit and a newline, or else program will be caught in loop
+
 #### Attempted: ####
 - Multiple redirections/pipes on one line
 
 #### Bugs: ####
-1. When executing ./a.out with other file as input, please
-   exit and a newline, or else program will be caught in loop
-2. UNPREDICTABLE during redirection when test calls are from file
-   rather than STDIN
-3. If test call resulted in error, exit might have to be called
-   several times before functioning.
-4. `rm -rf` and `ls -l -a` do not work (although `ls -la` does)
+- Unpredictable during redirection when test calls are from file
+  rather than STDIN
+- If a test call resulted in error, exit might have to be called
+  several times before functioning.
+- `ls -l -a` do not work (although `ls -la` does)
+- `$ `, which indicates the program awaiting next input may appear in output
+  unpredictably during piping
 
 #### Files & Function Headers: ####
-                  
+
 ###### parser.c ######
 - - - -
 ```
@@ -74,6 +78,18 @@ by Ahbab Ashraf and Kristin Lin
   ===============================================*/
 
 /*===============================================                     
+  int redirect()
+
+  INPUTS: char * command
+  	  int src
+	  int desc 
+  RETURNS: 1 
+
+  Dups the desc file, dup2s the src to the desc, runs command, then dup2s
+  the copied desc file into desc again.
+  ===============================================*/
+
+/*===============================================                     
   int run()
 
   INPUTS: char * line
@@ -90,7 +106,7 @@ by Ahbab Ashraf and Kristin Lin
   int command_cd()
 
   INPUTS: char * line
-  RETURNS: 1, successful
+  RETURNS: 1
 
   Calls chdir with the path, the second part of the line after the first
   space, before returning 0.
