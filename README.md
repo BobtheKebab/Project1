@@ -20,14 +20,13 @@ by Ahbab Ashraf and Kristin Lin
   rather than STDIN
 - If a test call resulted in error, exit might have to be called
   several times before functioning.
-- `ls -l -a` do not work (although `ls -la` does)
+- `ls -l -a` does not work (although `ls -la` does)
 - `$ `, which indicates the program awaiting next input may appear in output
   unpredictably during piping
 
 #### Files & Function Headers: ####
 
 ###### parser.c ######
-- - - -
 ```
 /*===============================================                  
   char ** parse_args()
@@ -53,7 +52,6 @@ by Ahbab Ashraf and Kristin Lin
 ```
   
 ###### proj1.c ######
-- - - -
 ```
 /*===============================================                     
   char * cleanser()
